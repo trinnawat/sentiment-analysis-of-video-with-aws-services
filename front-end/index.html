@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video</title>
+</head>
+<body>
+    <form name="uploadForm" id="uploadFormId" onsubmit="event.preventDefault()">
+        <div>
+            Insert you email:
+            <input id="mailInput" type="text" name="mail">
+        </div>
+        <div>
+            Insert username:
+            <input id="username" type="text">
+        </div>
+        <div>
+            Insert password:
+            <input id="password" type="text">
+        </div>
+        <div> 
+          <input id="uploadInputFile" type="file" name="videoFileName">
+        </div>
+        <div><input id="submitButtonId" type="submit" value="Send file"></div>
+      </form>
+    <script>
+        function onSelectFile() {
+            let inputFiles = document.getElementById('uploadInputFile').files;
+            console.log(inputFiles);
+            console.log(inputFiles[0]);
+        }
+        
+        function uploadVideoFile() {
+            let mail = document.getElementById('mailInput').value;
+            let inputFile = document.getElementById('uploadInputFile').files[0];
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            fetch('https://mtnivcfw6c.execute-api.ap-southeast-1.amazonaws.com/api/presignedurl?mail=' + mail,
+                { 
+                    method: 'GET', 
+                    headers: new Headers({'Authorization': 'Basic '+ btoa(username + ':' + password)})
+                }).then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                                response.status);
+                            return;
+                        }
+
+                        response.json().then(function (data) {
+                            console.log(data);
+                            let presigned = data;
+                            const formData = new FormData();
+                            formData.append("key", presigned.fields['key']);
+                            formData.append("AWSAccessKeyId", presigned.fields['AWSAccessKeyId']);
+                            formData.append("x-amz-security-token", presigned.fields['x-amz-security-token']);
+                            formData.append("policy", presigned.fields['policy']);
+                            formData.append("signature", presigned.fields['signature']);
+                            formData.append("file", inputFile);
+
+                            console.log("POSTING! " + presigned.url)
+
+                            fetch(presigned.url, {
+                                method: "POST",
+                                body: formData
+                            }).then(function (secondresponse, error) {
+                                    // window.location = "www.google.com"
+                                    console.log(error);
+                                    console.log('Everything worked!: ' + secondresponse.status);
+                                }
+                            );
+                        });
+                    }
+                )
+                .catch(function (err) {
+                    console.log('Fetch Error :-S', err);
+                });
+        }
+        document.getElementById("uploadInputFile").addEventListener("change", onSelectFile);
+        document.getElementById("submitButtonId").addEventListener("click", uploadVideoFile);
+    </script>
+    
+</body>
+</html>

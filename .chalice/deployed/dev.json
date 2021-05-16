@@ -1,0 +1,34 @@
+{
+  "resources": [
+    {
+      "name": "api_handler_role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::120535062811:role/sentiment-analysis-of-video-with-aws-services-dev-api_handler",
+      "role_name": "sentiment-analysis-of-video-with-aws-services-dev-api_handler"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ap-southeast-1:120535062811:function:sentiment-analysis-of-video-with-aws-services-dev"
+    },
+    {
+      "name": "basic_auth_role",
+      "resource_type": "iam_role",
+      "role_arn": "arn:aws:iam::120535062811:role/sentiment-analysis-of-video-with-aws-services-dev-basic_auth",
+      "role_name": "sentiment-analysis-of-video-with-aws-services-dev-basic_auth"
+    },
+    {
+      "name": "basic_auth",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ap-southeast-1:120535062811:function:sentiment-analysis-of-video-with-aws-services-dev-basic_auth"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "mtnivcfw6c",
+      "rest_api_url": "https://mtnivcfw6c.execute-api.ap-southeast-1.amazonaws.com/api/"
+    }
+  ],
+  "schema_version": "2.0",
+  "backend": "api"
+}

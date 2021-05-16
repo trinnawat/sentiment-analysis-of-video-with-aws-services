@@ -1,0 +1,1 @@
+http https://mtnivcfw6c.execute-api.ap-southeast-1.amazonaws.com/api/presignedurl?mail=trinnawatgot@gmail.com "Authorization: Basic Z290OmdvdA=="
