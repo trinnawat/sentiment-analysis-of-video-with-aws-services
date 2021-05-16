@@ -21,7 +21,7 @@ def test_basic_auth_authorized_case():
 def test_get_presigned_url_func():
     with Client(app) as client:
         response = client.http.get(
-            "/presignedurl?mail=trinnawatgot@gmail.com",
+            "/presignedurl?mail=test@test.com",
             headers={"Authorization": "Basic Z290OmdvdA=="},
         )
         body = response.json_body
@@ -34,5 +34,5 @@ def test_get_presigned_url_func():
         assert body["url"] == "https://video-upload-bucket-trinnawat.s3.amazonaws.com/"
 
         assert users_video_dictionary == {
-            "trinnawatgot@gmail.com": ["c1805ebc3b65382cebee_0.mp4"]
+            "test@test.com": ["42112ae3cb322f13f865_0.mp4"]
         }
