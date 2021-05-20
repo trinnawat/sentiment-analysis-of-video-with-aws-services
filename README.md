@@ -24,3 +24,15 @@
 [Set up CORS for S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ManageCorsUsing.html)
 
 [Testing Chalice](https://aws.github.io/chalice/topics/testing.html)
+
+[Elastic Transcoder on Boto3](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/elastictranscoder.html)
+
+- [example](https://docs.aws.amazon.com/code-samples/latest/catalog/python-elastictranscoder-create_hls_job.py.html)
+
+[DynamoDB Python Boto3 Query Cheat Sheet](https://dynobase.dev/dynamodb-python-with-boto3/#scan)
+
+### DynamoDB Schema
+
+    project_step (partition key) STRING,
+    mail (sort key) STRING,
+    video STRING

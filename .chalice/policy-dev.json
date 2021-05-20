@@ -12,7 +12,38 @@
       },
       {
         "Effect": "Allow",
-        "Action": "s3:*",
+        "Action": [
+          "s3:ListAllMyBuckets",
+          "s3:GetBucketLocation",
+          "s3:ListBucket",
+          "s3:GetObject",
+          "s3:PutObject"
+          ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "elastictranscoder:List*",
+          "elastictranscoder:Read*",
+          "elastictranscoder:CreateJob"
+       ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem",
+          "dynamodb:ConditionCheckItem",
+          "dynamodb:PutItem",
+          "dynamodb:DescribeTable",
+          "dynamodb:DeleteItem",
+          "dynamodb:GetItem",
+          "dynamodb:Scan",
+          "dynamodb:Query",
+          "dynamodb:UpdateItem"
+       ],
         "Resource": "*"
       }
     ]
