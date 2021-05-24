@@ -45,6 +45,13 @@
           "dynamodb:UpdateItem"
        ],
         "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "transcribe:*"
+       ],
+        "Resource": "*"
       }
     ]
   }

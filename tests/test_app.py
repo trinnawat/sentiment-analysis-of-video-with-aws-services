@@ -1,5 +1,6 @@
 from chalice.test import Client
-from app import app, MAIL_VIDEO_TABLE_NAME, WEB_PRESET_ID
+from app import app, MAIL_VIDEO_TABLE_NAME, TRANSCODED_VIDEO_BUCKET_NAME, WEB_PRESET_ID
+from app import set_file_extension
 from pytest import fixture
 
 
@@ -42,7 +43,35 @@ def test_handle_object_created(test_client):
     )
     response = test_client.lambda_.invoke("handle_object_created", event)
     job_info = response.payload["Job"]
-    print(job_info)
+    print(job_info["Outputs"])
     assert job_info["Input"] == {"Key": "test.mp4"}
-    assert job_info["Output"]["Key"] == "web_test.mp4"
-    assert job_info["Output"]["PresetId"] == WEB_PRESET_ID
+    # assert job_info["Output"]["Key"] == "web_test.mp4"
+    # assert job_info["Output"]["PresetId"] == WEB_PRESET_ID
+
+
+def test_handle_audio_object_created(test_client):
+    event = test_client.events.generate_s3_event(
+        bucket=MAIL_VIDEO_TABLE_NAME, key="test.mp3"
+    )
+    response = test_client.lambda_.invoke("handle_audio_object_created", event)
+    # job_info = response.payload["Job"]
+    # print(job_info["Outputs"])
+    # assert job_info["Input"] == {"Key": "test.mp4"}
+
+
+def test_handle_transcript_json_object_created(test_client):
+    event = test_client.events.generate_s3_event(
+        bucket=TRANSCODED_VIDEO_BUCKET_NAME,
+        key="audio/TestProject/0/transcribe/012511_ITWH_SOTU.json",
+    )
+    response = test_client.lambda_.invoke(
+        "handle_transcript_json_object_created", event
+    )
+    print(response)
+
+
+def test_set_file_extension():
+    input_filename = "testfile.mp4"
+    extension = ".mp3"
+    output_filename = set_file_extension(input_filename, extension)
+    assert output_filename == "testfile.mp3"
